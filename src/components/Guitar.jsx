@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Guitar({ guitar }) {
+function Guitar({ guitar, addToCart }) {
   return (
     <div
       key={guitar.id}
@@ -24,7 +24,11 @@ function Guitar({ guitar }) {
             currency: 'ARS',
           })}
         </p>
-        <button type="button" className="btn btn-dark w-100">
+        <button
+          onClick={() => addToCart(guitar)}
+          type="button"
+          className="btn btn-dark w-100"
+        >
           Agregar al Carrito
         </button>
       </div>

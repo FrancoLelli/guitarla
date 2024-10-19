@@ -6,19 +6,34 @@ import { db } from './data/db';
 
 function App() {
   const [data, setData] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     setData(db);
   }, []);
 
+  const addToCart = (item) => {
+    const exists = cart.findIndex((itemCart) => itemCart.id === item.id);
+    if (exists >= 0) {
+      const updatedCart = [...cart];
+      updatedCart[exists].quantity++;
+      setCart(updatedCart);
+    } else {
+      item.quantity = 1;
+      setCart([...cart, item]);
+    }
+  };
+
   return (
     <>
-      <Header />
+      <Header cart={cart} />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
         <div className="row mt-5">
           {data.map((guitar) => {
-            return <Guitar key={guitar.id} guitar={guitar} />;
+            return (
+              <Guitar key={guitar.id} guitar={guitar} addToCart={addToCart} />
+            );
           })}
         </div>
       </main>
