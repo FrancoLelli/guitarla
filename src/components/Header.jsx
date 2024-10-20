@@ -1,7 +1,7 @@
 import React from 'react';
 import Cart from './Cart';
 
-function Header({ cart }) {
+function Header({ cart, removeFromCart }) {
   return (
     <header className="py-5 header">
       <div className="container-xl">
@@ -16,7 +16,7 @@ function Header({ cart }) {
             </a>
           </div>
           <nav className="col-md-6 a mt-5 d-flex align-items-start justify-content-end">
-            <Cart cart={cart} />
+            <Cart cart={cart} removeFromCart={removeFromCart} />
           </nav>
         </div>
       </div>

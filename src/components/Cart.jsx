@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-function Cart({ cart }) {
+function Cart({ cart, removeFromCart }) {
+  //State derivado
+  const isEmpty = useMemo(() => cart.length > 0, [cart]);
+
+  const totalCart = useMemo(
+    () => cart.reduce((total, item) => total + item.quantity * item.price, 0),
+    [cart]
+  );
+
   return (
     <div className="carrito">
       <img
@@ -10,7 +18,7 @@ function Cart({ cart }) {
       />
 
       <div id="carrito" className="bg-white p-3">
-        {cart.length > 0 ? (
+        {isEmpty ? (
           <>
             <table className="w-100 table">
               <thead>
@@ -50,7 +58,11 @@ function Cart({ cart }) {
                         </button>
                       </td>
                       <td>
-                        <button className="btn btn-danger" type="button">
+                        <button
+                          onClick={() => removeFromCart(item)}
+                          className="btn btn-danger"
+                          type="button"
+                        >
                           X
                         </button>
                       </td>
@@ -61,7 +73,13 @@ function Cart({ cart }) {
             </table>
 
             <p className="text-end">
-              Total pagar: <span className="fw-bold">$899</span>
+              Total pagar:{' '}
+              <span className="fw-bold">
+                {totalCart.toLocaleString('ES-ar', {
+                  style: 'currency',
+                  currency: 'ARS',
+                })}
+              </span>
             </p>
             <button className="btn btn-dark w-100 mt-3 p-2">
               Vaciar Carrito
