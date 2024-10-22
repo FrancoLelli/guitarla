@@ -41,6 +41,7 @@ function App() {
           quantity: item.quantity + 1,
         };
       }
+      return cartItem;
     });
     setCart(newCart);
   };
@@ -53,6 +54,7 @@ function App() {
           quantity: item.quantity - 1,
         };
       }
+      return cartItem;
     });
     setCart(newCart);
   };
