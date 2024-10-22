@@ -1,7 +1,13 @@
 import React from 'react';
 import Cart from './Cart';
 
-function Header({ cart, removeFromCart }) {
+function Header({
+  cart,
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+  resetCart,
+}) {
   return (
     <header className="py-5 header">
       <div className="container-xl">
@@ -10,13 +16,19 @@ function Header({ cart, removeFromCart }) {
             <a href="index.html">
               <img
                 className="img-fluid"
-                src="./public/img/logo.svg"
+                src="/img/logo.svg"
                 alt="imagen logo"
               />
             </a>
           </div>
           <nav className="col-md-6 a mt-5 d-flex align-items-start justify-content-end">
-            <Cart cart={cart} removeFromCart={removeFromCart} />
+            <Cart
+              cart={cart}
+              removeFromCart={removeFromCart}
+              increaseQuantity={increaseQuantity}
+              decreaseQuantity={decreaseQuantity}
+              resetCart={resetCart}
+            />
           </nav>
         </div>
       </div>

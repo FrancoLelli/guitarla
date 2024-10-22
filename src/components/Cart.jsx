@@ -1,6 +1,12 @@
 import React, { useMemo } from 'react';
 
-function Cart({ cart, removeFromCart }) {
+function Cart({
+  cart,
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+  resetCart,
+}) {
   //State derivado
   const isEmpty = useMemo(() => cart.length > 0, [cart]);
 
@@ -11,11 +17,7 @@ function Cart({ cart, removeFromCart }) {
 
   return (
     <div className="carrito">
-      <img
-        className="img-fluid"
-        src="./public/img/carrito.png"
-        alt="imagen carrito"
-      />
+      <img className="img-fluid" src="/img/carrito.png" alt="imagen carrito" />
 
       <div id="carrito" className="bg-white p-3">
         {isEmpty ? (
@@ -37,7 +39,7 @@ function Cart({ cart, removeFromCart }) {
                       <td>
                         <img
                           className="img-fluid"
-                          src={`./public/img/${item.image}.jpg`}
+                          src={`/img/${item.image}.jpg`}
                           alt="imagen guitarra"
                         />
                       </td>
@@ -49,11 +51,19 @@ function Cart({ cart, removeFromCart }) {
                         })}
                       </td>
                       <td className="flex align-items-start gap-4">
-                        <button type="button" className="btn btn-dark">
+                        <button
+                          onClick={() => decreaseQuantity(item)}
+                          type="button"
+                          className="btn btn-dark"
+                        >
                           -
                         </button>
                         {item.quantity}
-                        <button type="button" className="btn btn-dark">
+                        <button
+                          onClick={() => increaseQuantity(item)}
+                          type="button"
+                          className="btn btn-dark"
+                        >
                           +
                         </button>
                       </td>
@@ -81,7 +91,10 @@ function Cart({ cart, removeFromCart }) {
                 })}
               </span>
             </p>
-            <button className="btn btn-dark w-100 mt-3 p-2">
+            <button
+              onClick={() => resetCart()}
+              className="btn btn-dark w-100 mt-3 p-2"
+            >
               Vaciar Carrito
             </button>
           </>

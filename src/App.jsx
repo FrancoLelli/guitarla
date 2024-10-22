@@ -5,8 +5,12 @@ import Guitar from './components/Guitar';
 import { db } from './data/db';
 
 function App() {
+  const initialCart = () => {
+    const initialValues = localStorage.getItem('cart');
+    return initialValues ? JSON.parse(initialValues) : [];
+  };
   const [data, setData] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(initialCart);
 
   useEffect(() => {
     setData(db);
@@ -29,9 +33,47 @@ function App() {
     setCart(newCart);
   };
 
+  const increaseQuantity = (item) => {
+    const newCart = cart.map((cartItem) => {
+      if (cartItem.id == item.id) {
+        return {
+          ...item,
+          quantity: item.quantity + 1,
+        };
+      }
+    });
+    setCart(newCart);
+  };
+
+  const decreaseQuantity = (item) => {
+    const newCart = cart.map((cartItem) => {
+      if (cartItem.id == item.id) {
+        return {
+          ...item,
+          quantity: item.quantity - 1,
+        };
+      }
+    });
+    setCart(newCart);
+  };
+
+  const resetCart = () => {
+    setCart([]);
+  };
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
   return (
     <>
-      <Header cart={cart} removeFromCart={removeFromCart} />
+      <Header
+        cart={cart}
+        removeFromCart={removeFromCart}
+        increaseQuantity={increaseQuantity}
+        decreaseQuantity={decreaseQuantity}
+        resetCart={resetCart}
+      />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
         <div className="row mt-5">
