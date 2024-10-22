@@ -49,6 +49,7 @@ function App() {
   const decreaseQuantity = (item) => {
     const newCart = cart.map((cartItem) => {
       if (cartItem.id == item.id) {
+        if (cartItem.quantity - 1 < 1) return cartItem;
         return {
           ...item,
           quantity: item.quantity - 1,
